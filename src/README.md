@@ -21,7 +21,7 @@ $ source .venv/bin/activate
 ```bash
 # Windows (CMD)
 $ python -m venv .venv
-$ .venv\Scripts\activate.bat
+$ .venv\Scripts\activate
 ```
 4. Set Up and Run MySQL (via Docker)
 ```bash
