@@ -1,0 +1,22 @@
+services:
+  web:  # Flaskアプリケーション
+    build: .  # Dockerfileからビルド
+    ports:
+      - "5001:5000"  # ホストの5001をコンテナの5000にマッピング
+    environment:
+      - FLASK_ENV=development  # デバッグモードを有効化
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: examplepassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mysql-data:
