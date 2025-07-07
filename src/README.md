@@ -9,8 +9,8 @@ Ensure you have **Python 3**, **Docker**, and **Docker Compose** installed on yo
 ### 1. Clone the Repository
 
 ```bash
-$ git clone https://github.com/<your-org-or-username>/<repo-name>.git
-$ cd <repo-name>/src
+$ git clone https://github.com/s1302007/SpaceApps.git
+$ cd SpaceApps/src
 ```
 ### 2. Create and Activate Virtual Environment
 ```bash
@@ -19,7 +19,7 @@ $ python3 -m venv .venv
 $ source .venv/bin/activate
 ```
 ```bash
-# Windows (CMD)
+# Windows 
 $ python -m venv .venv
 $ .venv\Scripts\activate
 ```
@@ -27,3 +27,4 @@ $ .venv\Scripts\activate
 ```bash
 $ docker compose up --build
 ```
+5. Open http://localhost:5001/ in browser

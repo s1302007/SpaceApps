@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask,jsonify, redirect, request
 import mysql.connector
 
 app = Flask(__name__)
@@ -11,26 +11,48 @@ def get_db_connection():
         database='mydb'
     )
 
-@app.route('/')
-def home():
+@app.route('/api/planets', methods=['GET'])
+def get_planets():
+    """Return a list of planets"""
     connection = get_db_connection()
-    cursor = connection.cursor()
-    cursor.execute("SELECT message FROM greetings")
-    messages = cursor.fetchall()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT id, name, description FROM planets")
+    planets = cursor.fetchall()
     cursor.close()
     connection.close()
-    return render_template('index.html', messages=messages)
+    return jsonify(planets), 200
 
-@app.route('/add', methods=['POST'])
-def add_message():
-    message = request.form['message']
+
+@app.route('/api/planets/<int:planet_id>/landmarks', methods=['GET'])
+def get_landmarks(planet_id):
+    """Return landmarks for a given planet"""
     connection = get_db_connection()
-    cursor = connection.cursor()
-    cursor.execute("INSERT INTO greetings (message) VALUES (%s)", (message,))
-    connection.commit()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT id, name, type, coordinates 
+        FROM landmarks 
+        WHERE planet_id = %s
+    """, (planet_id,))
+    landmarks = cursor.fetchall()
     cursor.close()
     connection.close()
-    return redirect('/')
+    return jsonify(landmarks), 200
+
+@app.route('/api/routes', methods=['POST'])
+def get_route():
+    """Mock route calculation between landmarks"""
+    data = request.get_json()
+    start = data.get('start')
+    end = data.get('end')
+
+    # dummy example
+    route = {
+        "start": start,
+        "end": end,
+        "distance": "42 km",
+        "estimated_time": "15 min"
+    }
+    return jsonify(route), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
