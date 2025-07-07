@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Planetary Web API – SpaceApps 2025 Project
+=======
+# SpaceApps 2025 
+>>>>>>> ef26ab79929c7cf81678988a04c78a2fb371fe40
 
 This project simulates planetary geolocation, landmarks, and route data via a Flask-powered Web API. It's designed for the NASA Space Apps Challenge 2025.
 
