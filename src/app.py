@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 from flask import Flask,jsonify, redirect, request
-=======
-from flask import Flask, render_template, request, redirect
->>>>>>> ef26ab79929c7cf81678988a04c78a2fb371fe40
 import mysql.connector
 
 app = Flask(__name__)
@@ -14,8 +10,7 @@ def get_db_connection():
         password='mypassword',
         database='mydb'
     )
-
-<<<<<<< HEAD
+    
 @app.route('/api/planets', methods=['GET'])
 def get_planets():
     """Return a list of planets"""
@@ -58,28 +53,6 @@ def get_route():
         "estimated_time": "15 min"
     }
     return jsonify(route), 200
-=======
-@app.route('/')
-def home():
-    connection = get_db_connection()
-    cursor = connection.cursor()
-    cursor.execute("SELECT message FROM greetings")
-    messages = cursor.fetchall()
-    cursor.close()
-    connection.close()
-    return render_template('index.html', messages=messages)
-
-@app.route('/add', methods=['POST'])
-def add_message():
-    message = request.form['message']
-    connection = get_db_connection()
-    cursor = connection.cursor()
-    cursor.execute("INSERT INTO greetings (message) VALUES (%s)", (message,))
-    connection.commit()
-    cursor.close()
-    connection.close()
-    return redirect('/')
->>>>>>> ef26ab79929c7cf81678988a04c78a2fb371fe40
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
