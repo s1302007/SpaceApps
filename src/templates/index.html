@@ -2,20 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>今日もお疲れ様！！</title>
+    <title>Moon DEM Query Redirect</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        label, select, input { display: block; margin: 10px 0; }
+    </style>
 </head>
 <body>
-    <h1>今日は金曜日！明日から夢の週末ですね！</h1>
-    <form action="/add" method="post">
-        <input type="text" name="message" placeholder="Enter your message" required>
-        <button type="submit">Add Message</button>
+    <h1>Copernicus Crater Data Query</h1>
+    <form id="queryForm">
+        <label for="lat">Latitude (9.4 to 10.0):</label>
+        <input type="number" id="lat" name="lat" step="0.0001" required>
+
+        <label for="lon">Longitude (-20.5 to -19.7):</label>
+        <input type="number" id="lon" name="lon" step="0.0001" required>
+
+        <label for="dataType">Select Data Type:</label>
+        <select id="dataType" name="dataType">
+            <option value="elevation">Elevation</option>
+            <option value="slope">Slope</option>
+            <option value="aspect">Aspect</option>
+        </select>
+
+        <button type="submit">Go</button>
     </form>
-    <h2>Messages:</h2>
-    <ul>
-        {% for message in messages %}
-        <li>{{ message[0] }}</li>
-        {% endfor %}
-    </ul>
+
+    <script>
+        document.getElementById('queryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const lat = document.getElementById('lat').value;
+            const lon = document.getElementById('lon').value;
+            const dataType = document.getElementById('dataType').value;
+
+            // Build the URL dynamically
+            const apiUrl = `/api/${dataType}?lat=${lat}&lon=${lon}`;
+            // Redirect the browser
+            window.location.href = apiUrl;
+        });
+    </script>
 </body>
 </html>
